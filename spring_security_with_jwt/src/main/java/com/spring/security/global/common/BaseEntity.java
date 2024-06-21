@@ -19,6 +19,6 @@ public class BaseEntity {
     private Long createdBy;
 
     @LastModifiedBy
-    @Column(name = "updated_by", nullable = false)
-    private Long updatedBy;
+    @Column(name = "modified_by", nullable = false)
+    private Long modifiedBy;
 }
