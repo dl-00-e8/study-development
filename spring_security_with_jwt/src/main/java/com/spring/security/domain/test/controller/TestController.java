@@ -1,5 +1,6 @@
 package com.spring.security.domain.test.controller;
 
+import com.spring.security.domain.test.service.TestService;
 import com.spring.security.domain.user.dto.response.UserResponse;
 import com.spring.security.domain.user.entity.User;
 import com.spring.security.global.common.ApplicationResponse;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
 
-    @GetMapping("")
+    private final TestService testService;
+
+    @PostMapping("")
     @Operation(summary = "사용자 조회", description = "토큰 제외하고, ")
     @ApiResponses(
             value = {
@@ -31,6 +35,6 @@ public class TestController {
     public ResponseEntity<?> getMember(@AuthUser User user) {
         return ResponseEntity
                 .ok()
-                .body(ApplicationResponse.ok(user));
+                .body(ApplicationResponse.ok(testService.register(user)));
     }
 }
