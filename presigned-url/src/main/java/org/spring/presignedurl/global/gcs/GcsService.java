@@ -26,6 +26,22 @@ public class GcsService {
         BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build();
 
         Map<String, String> extensionHeaders = new HashMap<>();
+        String contentType = getContentType(objectName);
+
+        extensionHeaders.put("Content-Type", contentType);
+
+
+        URL url = storage.signUrl(blobInfo,
+                15,
+                TimeUnit.MINUTES,
+                Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+                Storage.SignUrlOption.withExtHeaders(extensionHeaders),
+                Storage.SignUrlOption.withV4Signature());
+
+        return url.toString();
+    }
+
+    private static String getContentType(String objectName) {
         String contentType;
         // 파일 이름에서 확장자 추출
         int lastDotIndex = objectName.lastIndexOf('.');
@@ -40,17 +56,6 @@ public class GcsService {
         } else {
             contentType = "application/octet-stream"; // 확장자가 없는 경우 기본값
         }
-
-        extensionHeaders.put("Content-Type", contentType);
-
-
-        URL url = storage.signUrl(blobInfo,
-                15,
-                TimeUnit.MINUTES,
-                Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
-                Storage.SignUrlOption.withExtHeaders(extensionHeaders),
-                Storage.SignUrlOption.withV4Signature());
-
-        return url.toString();
+        return contentType;
     }
 }
