@@ -85,12 +85,7 @@ func main() {
 	c.Start()
 
 	// HTTP Server Start
-	if err := e.Start(":80"); err != http.ErrServerClosed {
+	if err := e.Start(":8081"); err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
-
-	// HTTPS Server Start
-	// if err := e.StartTLS(":8443", "server.crt", "server.key"); err != http.ErrServerClosed {
-	// 	log.Fatal(err)
-	// }
 }
