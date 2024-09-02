@@ -128,10 +128,5 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
 
-docker-compose.yml
-monitoring-docker-compose.yml
-prometheus.yml
-**/application.yml
-
-__default__.tmpl
-grafana.db
+application.yml
+gcp-service-account-key.json
