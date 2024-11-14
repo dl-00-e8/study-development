@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'edu.acchongik'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // S3
+    implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws', version: '2.4.4'
+}
+
+test {
+    useJUnitPlatform()
+}
