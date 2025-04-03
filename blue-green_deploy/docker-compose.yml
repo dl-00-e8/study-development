@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  blue: 
+    container_name: blue
+    image: flask-server:latest
+    ports:
+      - "5001:5001"
+    networks:
+      - network
+  
+  green:
+    container_name: green
+    image: flask-server:latest
+    ports:
+      - "5002:5001"
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
