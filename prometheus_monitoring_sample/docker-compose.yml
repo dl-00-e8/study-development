@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: tes-tdb
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: testdb
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    networks:
+      - test_network
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: test-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - test_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: test-grafana
+    user: "$UID:$GID"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge
